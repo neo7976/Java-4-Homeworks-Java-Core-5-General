@@ -94,5 +94,6 @@ public class MainJSON {
         System.out.println("Имя: " + cat.name + "\nВозраст: " + cat.age + "\nЦвет: " +
                 cat.color);
 
+
     }
 }

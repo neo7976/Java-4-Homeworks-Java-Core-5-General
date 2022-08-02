@@ -1,14 +1,19 @@
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MainCSV {
     public static void main(String[] args) {
@@ -22,24 +27,24 @@ public class MainCSV {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
-
+//
+//
 //        // Создаем экземпляр CSVWriter
 //// Разделитель по умолчанию - запятая
 //// Символ выражения по умолчанию - двойные кавычки
-//        try (CSVReader reader = new CSVReader(new FileReader("lessonCSV/src/main/resources/staff.csv"))) {
+//        try (CSVReader reader = new CSVReader(new java.io.FileReader("lessonCSV/src/main/resources/staff.csv"))) {
 //// Массив считанных строк
 //            String[] nextLine;
 //// Читаем CSV построчно
 //            while ((nextLine = reader.readNext()) != null) {
 //// Работаем с прочитанными данными.
-//                System.out.println(Arrays.toString(nextLine));
+//                System.out.println(java.util.Arrays.toString(nextLine));
 //            }
 //        } catch (IOException | CsvValidationException e) {
 //            e.printStackTrace();
 //        }
-
-
+//
+//
 //        // В приведенном выше примере считывается весь CSV-файл, а затем строки
 //        // перебираются по очереди
 //        try (CSVReader reader = new CSVReader(new FileReader("lessonCSV/src/main/resources/staff.csv"))) {
@@ -54,8 +59,9 @@ public class MainCSV {
 //        } catch (IOException | CsvException e) {
 //            e.printStackTrace();
 //        }
-
-
+//
+//
+//
 //        // Создаем запись
 //        String[] employee = "5,David,Feezor,USA,40".split(",");
 //// Создаем экземпляр CSVWriter
@@ -65,8 +71,8 @@ public class MainCSV {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
-
+//
+//
 //        // Создадим пользовательский парсер
 //        CSVParser parser = new CSVParserBuilder()
 //                .withSeparator('|')
@@ -83,8 +89,8 @@ public class MainCSV {
 //        } catch (IOException | CsvValidationException e) {
 //            e.printStackTrace();
 //        }
-
-
+//
+//
 //        //parsing/deserialization
 //        try (CSVReader csvReader = new CSVReader(new FileReader("lessonCSV/src/main/resources/staff.csv"))) {
 //
@@ -107,17 +113,17 @@ public class MainCSV {
         staff.add(new Employee(1, "Nikita", "Shumskii", "Russia", 25));
         staff.add(new Employee(2, "Pavel", "Shramko", "Russia", 23));
 
-        ColumnPositionMappingStrategy<Employee> strategy = new ColumnPositionMappingStrategy<>();
+        com.opencsv.bean.ColumnPositionMappingStrategy<Employee> strategy = new com.opencsv.bean.ColumnPositionMappingStrategy<>();
         strategy.setType(Employee.class);
         strategy.setColumnMapping("id", "firstName", "lastName", "country", "age");
 
         try (Writer writer = new FileWriter("lessonCSV/src/main/resources/staff.csv")) {
 
-            StatefulBeanToCsv<Employee> sbc = new StatefulBeanToCsvBuilder<Employee>(writer)
+            com.opencsv.bean.StatefulBeanToCsv<Employee> sbc = new com.opencsv.bean.StatefulBeanToCsvBuilder<Employee>(writer)
                     .withMappingStrategy(strategy)
                     .build();
             sbc.write(staff);
-        } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+        } catch (IOException | com.opencsv.exceptions.CsvRequiredFieldEmptyException | com.opencsv.exceptions.CsvDataTypeMismatchException e) {
             e.printStackTrace();
         }
 
