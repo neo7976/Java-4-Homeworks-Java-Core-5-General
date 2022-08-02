@@ -1,10 +1,13 @@
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.*;
 
 
@@ -46,33 +49,40 @@ public class MainJSON {
 //        }
 
 
-        //json simple write
-        JSONObject obj = new JSONObject();
-        obj.put("name", "mkyong.com");
-        obj.put("age", 100);
-        JSONObject inner = new JSONObject();
-        inner.put("city", "New York");
-        inner.put("zip", 10500);
-        obj.put("address", inner);
-        JSONArray list = new JSONArray();
-        list.add("msg 1");
-        list.add("msg 2");
-        list.add("msg 3");
-        obj.put("messages", list);
-        obj.put("boolean", false);
-        obj.put("null", null);
-        obj.put("double", 12.23);
-
-        try (FileWriter file = new FileWriter("lessonJSON/src/main/resources/new_data.json")) {
-            file.write(obj.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+//        //json simple write
+//        JSONObject obj = new JSONObject();
+//        obj.put("name", "mkyong.com");
+//        obj.put("age", 100);
+//        JSONObject inner = new JSONObject();
+//        inner.put("city", "New York");
+//        inner.put("zip", 10500);
+//        obj.put("address", inner);
+//        JSONArray list = new JSONArray();
+//        list.add("msg 1");
+//        list.add("msg 2");
+//        list.add("msg 3");
+//        obj.put("messages", list);
+//        obj.put("boolean", false);
+//        obj.put("null", null);
+//        obj.put("double", 12.23);
+//
+//        try (FileWriter file = new FileWriter("lessonJSON/src/main/resources/new_data.json")) {
+//            file.write(obj.toJSONString());
+//            file.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
+        //gson serialize
+        Cat cat = new Cat();
+        cat.name = "Матроскин";
+        cat.age = 5;
+        cat.color = Color.blue.getRGB();
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.setPrettyPrinting().create();
+        System.out.println(gson.toJson(cat));
 
 
     }
