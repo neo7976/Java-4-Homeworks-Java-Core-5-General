@@ -91,41 +91,41 @@ public class MainCSV {
 //        }
 //
 //
-//        //parsing/deserialization
-//        try (CSVReader csvReader = new CSVReader(new FileReader("lessonCSV/src/main/resources/staff.csv"))) {
-//
-//            ColumnPositionMappingStrategy<Employee> strategy = new ColumnPositionMappingStrategy<>();
-//            strategy.setType(Employee.class);
-//            strategy.setColumnMapping("id", "firstName", "lastName", "country", "age");
-//
-//            CsvToBean<Employee> csv = new CsvToBeanBuilder<Employee>(csvReader)
-//                    .withMappingStrategy(strategy)
-//                    .build();
-//            List<Employee> staff = csv.parse();
-//            staff.forEach(System.out::println);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //parsing/deserialization
+        try (CSVReader csvReader = new CSVReader(new FileReader("lessonCSV/src/main/resources/staff.csv"))) {
 
+            ColumnPositionMappingStrategy<Employee> strategy = new ColumnPositionMappingStrategy<>();
+            strategy.setType(Employee.class);
+            strategy.setColumnMapping("id", "firstName", "lastName", "country", "age");
 
-        //serialization
-        List<Employee> staff = new ArrayList<>();
-        staff.add(new Employee(1, "Nikita", "Shumskii", "Russia", 25));
-        staff.add(new Employee(2, "Pavel", "Shramko", "Russia", 23));
-
-        com.opencsv.bean.ColumnPositionMappingStrategy<Employee> strategy = new com.opencsv.bean.ColumnPositionMappingStrategy<>();
-        strategy.setType(Employee.class);
-        strategy.setColumnMapping("id", "firstName", "lastName", "country", "age");
-
-        try (Writer writer = new FileWriter("lessonCSV/src/main/resources/staff.csv")) {
-
-            com.opencsv.bean.StatefulBeanToCsv<Employee> sbc = new com.opencsv.bean.StatefulBeanToCsvBuilder<Employee>(writer)
+            CsvToBean<Employee> csv = new CsvToBeanBuilder<Employee>(csvReader)
                     .withMappingStrategy(strategy)
                     .build();
-            sbc.write(staff);
-        } catch (IOException | com.opencsv.exceptions.CsvRequiredFieldEmptyException | com.opencsv.exceptions.CsvDataTypeMismatchException e) {
+            List<Employee> staff = csv.parse();
+            staff.forEach(System.out::println);
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+//        //serialization
+//        List<Employee> staff = new ArrayList<>();
+//        staff.add(new Employee(1, "Nikita", "Shumskii", "Russia", 25));
+//        staff.add(new Employee(2, "Pavel", "Shramko", "Russia", 23));
+//
+//        ColumnPositionMappingStrategy<Employee> strategy = new ColumnPositionMappingStrategy<>();
+//        strategy.setType(Employee.class);
+//        strategy.setColumnMapping("id", "firstName", "lastName", "country", "age");
+//
+//        try (Writer writer = new FileWriter("lessonCSV/src/main/resources/staff.csv")) {
+//
+//            StatefulBeanToCsv<Employee> sbc = StatefulBeanToCsvBuilder<Employee>(writer)
+//                    .withMappingStrategy(strategy)
+//                    .build();
+//            sbc.write(staff);
+//        } catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+//            e.printStackTrace();
+//        }
 
 
     }
